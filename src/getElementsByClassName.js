@@ -4,7 +4,7 @@
 // };
 
 // But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className
+var getElementsByClassName = function(className, input
 ) {
   // your code here
 var collection = [];
@@ -16,19 +16,21 @@ var collection = [];
 
   //You should use document.body, element.childNodes, and element.classList
   //stores the body of the HTML document, but only initially
+  //console.log(document.body);
+  //console.log(this);
+
+  var mainBody = document.body;
+  
   
 
-  if(this === document) {
-  var mainBody = document.body;
-  var nodes = mainBody.childNodes;
-  console.log(mainBody);
-  console.log(nodes);
+  if(input !== window && input !== document && input !== undefined && input !== null) {
+  mainBody = input;
+  
   } 
-  else {
-  	var nodes = this.childNodes;
-  	console.log(nodes);
-  }
-
+  var nodes = mainBody.childNodes;
+  
+  //console.log(mainBody);
+  //console.log(nodes);
   
 
   //create an object to hold the element information for the HTML collection
@@ -41,7 +43,7 @@ var collection = [];
   //string in this case is the child element within the html body
   //see if class list contains the class argument that's input into the function
 for(var i = 0; i < nodes.length; i++) {
-	  if(_.contains(nodes[i].classList, className)) {
+    if(_.contains(nodes[i].classList, className)) {
     collection.push(nodes[i]);
 
     //does not account for subordinate child nodes
@@ -50,16 +52,16 @@ for(var i = 0; i < nodes.length; i++) {
     //push that object into an array
       };
      if(nodes[i].childNodes.length) {
-		collection.push(nodes[i].getElementsByClassName(className));
-	 }
-	}
+    collection.push(_.flatten(getElementsByClassName(className, nodes[i])));
+   }
+  }
 
 
   
   //return the array
-  return collection;
+  return _.flatten(collection);
   
 };
 
-document.getElementsByClassName("targetClassName");
-console.log(JSON.stringify(document.body.childNodes));
+//document.getElementsByClassName("targetClassName");
+//console.log(JSON.stringify(document.body.childNodes));
