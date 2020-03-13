@@ -17,16 +17,21 @@ var collection = [];
   //You should use document.body, element.childNodes, and element.classList
   //stores the body of the HTML document, but only initially
   //console.log(document.body);
-  //console.log(this);
+  
 
   var mainBody = document.body;
+  
   
   
 
   if(input !== window && input !== document && input !== undefined && input !== null) {
   mainBody = input;
   
-  } 
+  } else {
+    if(_.contains(mainBody.classList, className)) {
+    collection.push(mainBody);
+    }
+  }
   var nodes = mainBody.childNodes;
   
   //console.log(mainBody);
